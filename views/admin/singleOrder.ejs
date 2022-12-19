@@ -1,0 +1,222 @@
+<head>
+        <!--====== Google Font ======-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
+        
+        <!--====== Vendor Css ======-->
+        <link rel="stylesheet" href="/css/vendor.css">
+        
+        <!--====== Utility-Spacing ======-->
+        <link rel="stylesheet" href="/css/utility.css">
+        
+        <!--====== App ======-->
+        <link rel="stylesheet" href="/css/app.css">
+
+</head>
+<div class="blank">
+    <!-- <h2>Customers</h2> -->
+    <div class="col-lg-9 col-md-12">
+        <!-- <h1 class="dash__h1 u-s-m-b-30">Order Details</h1> -->
+        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+            <div class="dash__pad-2">
+                <div class="dash-l-r">
+                    <div>
+                        <div class="manage-o__text-2 u-c-secondary">Order #<%= order.orderId %>
+                        </div>
+                        <div class="manage-o__text u-c-silver">Placed on <%= order.createdAt %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+            <div class="dash__pad-2">
+                <div class="manage-o">
+                    <div class="manage-o__header u-s-m-b-30">
+                        <div class="manage-o__icon"><i class="fas fa-box u-s-m-r-5"></i>
+    
+                            <span class="manage-o__text">Package 1</span>
+                        </div>
+                    </div>
+                    <div class="dash-l-r">
+                        <div class="manage-o__text u-c-secondary">Delivered within 10 days</div>
+                        <% if(order.status !='cancelled' ){%>
+                           <form action="" id="updateForm">
+                        <div class="manage-o__icon"><i class="fas fa-truck u-s-m-r-5"></i>
+                            <!-- Example single danger button -->
+                            <div class="btn-group">
+                                <!-- <button type="button" class="btn btn-Secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Update
+                                </button> -->
+                                <!-- <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin/updateOrder/<%= order.orderId %>">ordered</a>
+                                    <a class="dropdown-item" href="#">shipped</a>
+                                    <a class="dropdown-item" href="#">in transit</a>
+                                    <a class="dropdown-item" href="#">delivered</a> -->
+                                    <select id="select1">
+                                        <option value="ordered">ordered</option>
+                                        <option value="shipped">shipped</option>
+                                        <option value="In transit">In transit</option>
+                                        <option value="In transit">delivered</option>
+                                    </select>
+                                <!-- </div> -->
+                            </div>
+                            <button id="updateBtn" type="submit" > Update </button>
+                            <!-- <span class="manage-o__text">Standard</span> -->
+                        </div>
+                        </form>
+                        <%}%>
+                    </div>
+                    <div class="manage-o__timeline">
+                        <div class="timeline-row">
+                            <div class="col-lg-4 u-s-m-b-30">
+                                <div class="timeline-step">
+                                    <div class="timeline-l-i timeline-l-i--finish">
+    
+                                        <span class="timeline-circle"></span>
+                                    </div>
+    
+                                    <span class="timeline-text">Processing</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 u-s-m-b-30">
+                                <div class="timeline-step">
+                                    <div class="timeline-l-i timeline-l-i--finish">
+    
+                                        <span class="timeline-circle"></span>
+                                    </div>
+    
+                                    <span class="timeline-text">Shipped</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 u-s-m-b-30">
+                                <div class="timeline-step">
+                                    <div class="timeline-l-i">
+    
+                                        <span class="timeline-circle"></span>
+                                    </div>
+    
+                                    <span class="timeline-text">Delivered</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% let no=0 %>
+                        <% let total=0 %>
+                            <% products.forEach((product)=>{%>
+                                <div class="manage-o__description">
+                                    <div class="description__container">
+                                        <div class="description__img-wrap">
+    
+                                            <img class="u-img-fluid" src="/images/product/ludus/<%= product._id %>.jpeg"
+                                                alt="">
+                                        </div>
+                                        <div class="description-title">
+                                            <%= product.name %>
+                                        </div>
+                                    </div>
+                                    <div class="description__info-wrap">
+                                        <div>
+    
+                                            <span class="manage-o__text-2 u-c-silver">Quantity:
+    
+                                                <span class="manage-o__text-2 u-c-secondary">
+                                                    <%= quantities[no] %>
+                                                </span></span>
+                                        </div>
+                                        <div>
+    
+                                            <span class="manage-o__text-2 u-c-silver">Price:
+    
+                                                <span class="manage-o__text-2 u-c-secondary">₹<%= product.price %>
+                                                        </span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% total=total+ (quantities[no] * product.price) %>
+                                    <% no++ %>
+                                        <%})%>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
+                    <div class="dash__pad-3">
+                        <h2 class="dash__h2 u-s-m-b-8">Shipping Address</h2>
+                        <h2 class="dash__h2 u-s-m-b-8"></h2>
+    
+                        <span class="dash__text-2">
+                            <%= order.deliveryDetails.address %>,
+                                <%= order.deliveryDetails.town %>,
+                                    <%= order.deliveryDetails.state %>,<%= order.deliveryDetails.pin%>
+                        </span>
+    
+                        <span class="dash__text-2">
+                            <%= order.deliveryDetails.phoneNo%>
+                        </span>
+                    </div>
+                </div>
+                <% if(order.status != 'cancelled' ){%>
+                    <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
+                        <div class="dash__pad-3">
+                            <div>
+    
+                                <button ac class="btn btn--e-brand-b-2" type="submit"> <a style="color: white;"
+                                        href="/admin/cancelOrder/<%= order.orderId %>">CANCEL ORDER</a></button>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
+            </div>
+            <div class="col-lg-6">
+                <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                    <div class="dash__pad-3">
+                        <h2 class="dash__h2 u-s-m-b-8">Total Summary</h2>
+                        <div class="dash-l-r u-s-m-b-8">
+                            <div class="manage-o__text-2 u-c-secondary">Subtotal</div>
+                            <div class="manage-o__text-2 u-c-secondary">₹<%= total %>
+                            </div>
+                        </div>
+                        <div class="dash-l-r u-s-m-b-8">
+                            <div class="manage-o__text-2 u-c-secondary">Shipping Fee</div>
+                            <div class="manage-o__text-2 u-c-secondary">₹100</div>
+                        </div>
+                        <div class="dash-l-r u-s-m-b-8">
+                            <div class="manage-o__text-2 u-c-secondary">Total</div>
+                            <div class="manage-o__text-2 u-c-secondary">₹<%= total+100 %>
+                            </div>
+                        </div>
+    
+                        <span class="dash__text-2">Paid by <%= order.paymentMethod %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    console.log('entering script');
+    const form = document.querySelector('#updateForm')
+    
+    form.addEventListener('submit', async (e)=>{
+        e.preventDefault()
+
+        const status = document.querySelector('#select1').value
+        console.log(status);
+        try {
+            const res = await fetch('/admin/updateOrder/<%= order.orderId %>', {
+                method: 'POST',
+                body: JSON.stringify({ status }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+
+        } catch(err){
+            console.log(err);
+        }
+
+    })
+
+</script>

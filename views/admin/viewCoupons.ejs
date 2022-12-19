@@ -1,0 +1,50 @@
+
+<div class="blank">
+    <h2>Coupons</h2>
+
+<div class="container mt-5">
+    <div style="padding-bottom: 10px;" class="mt-5">
+        <a href="/admin/addCoupon" class="btn btn-success mb-3">Add Coupon</a>
+    </div>
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th scope="col">Expiry Date</th>
+                <th scope="col">Coupon Name</th>
+                <th scope="col">Maximum Discount</th>
+                <th scope="col">Discount percentage</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% coupons.forEach((coupon)=>{%>
+                <tr>
+                    <th scope="row">
+                        <%= coupon.exDate %>
+                    </th>
+                    <td>
+                        <%= coupon.name %>
+                    </td>
+                    <td>
+                        <%= coupon.maxValue %>
+                    </td>
+                    <td>
+                        <%= coupon.discount %>%
+                    </td>
+
+                    <td>
+                        <a href="/admin/deleteCoupon/<%= coupon._id %>" class="btn btn-danger delete">Delete</a>
+                    </td>
+                </tr>
+                <%})%>
+        </tbody>
+    </table>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>

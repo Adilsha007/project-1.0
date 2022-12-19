@@ -1,0 +1,50 @@
+<div class="blank">
+    <h2>Customers</h2>
+
+            <div class="container">
+                <!-- <div class="a">
+                            <a class="btn btn-success ml-auto" href="/admin/addProduct">Add-product</a>
+                        </div> -->
+                <table class="table mt-5" id="myTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Number</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Phone No</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let no=1 %>
+                            <% users.forEach((user)=>{%>
+                                <tr>
+                                    <th>
+                                        <%= no++ %>
+                                    </th>
+                                    <td>
+                                        <%= user.name %>
+                                    </td>
+                                    <td>
+                                        <%= user.email %>
+                                    </td>
+                                    <td>
+                                        <%= user.phoneNo %>
+                                    </td>
+                                    <td>
+                                        <% if(user.active){%>
+            
+                                            <a class="btn btn-danger delete" href="#">Block</a>
+                                            <%}else{%>
+                                                <div>
+                                                    <%= user.active %>
+                                                </div>
+                                                <a class="btn btn-success delete" href="#">UnBlock</a>
+                                                <%}%>
+                                    </td>
+                                </tr>
+                                <%})%>
+                    </tbody>
+                </table>
+            </div>
+</div>

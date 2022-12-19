@@ -1,0 +1,65 @@
+<div class="blank">
+    <h2>Products</h2>
+    
+                <div  class="container">
+                    <div style="padding-bottom: 10px;" class="a">
+                        <a class="btn btn-success ml-auto" href="/admin/addProduct">Add-product</a>
+                    </div>
+                    <table  class="table mt-5" id="myTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">Number</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Category</th>
+                                <!-- <th scope="col">Description</th> -->
+                                <th scope="col">Price</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Edit/Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let no=1 %>
+                                <% products.forEach((product)=>{%>
+                                    <tr>
+                                        <th>
+                                            <%= no++ %>
+                                        </th>
+                                        <td>
+                                            <%= product.name %>
+                                        </td>
+                                        <td>
+                                            <%= product.category %>
+                                        </td>
+                                        
+                                        <td>
+                                            <%= product.price %>
+                                        </td>
+                                        <td><img src="/images/product/ludus/<%= product._id %>.jpeg" style="width:50px;height:50px;">
+                                        </td>
+                                        <td>
+                                            <a href="/admin/editProduct/<%= product._id %>" class="btn btn-success">Edit</a>
+                
+                
+                
+                                            <div class="modal fade" id="add-to-cart">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content modal-radius modal-shadow">
+                                                        <a href=""></a>
+                                                        <a class="btn btn-danger"
+                                                            href="/admin/deleteProduct/<%= product._id %>">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                
+                
+                                            <a class="btn btn-danger delete" href="/admin/deleteProduct/<%= product._id %>">Delete</a>
+                
+                                        </td>
+                                    </tr>
+                                    <%})%>
+                        </tbody>
+                    </table>
+                </div>
+    </div>

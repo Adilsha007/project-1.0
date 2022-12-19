@@ -1,0 +1,41 @@
+<div class="blank">
+    <h2>Customers</h2>
+
+    <div class="container">
+        <table class="table mt-5" id="myTable">
+            <thead>
+                <tr>
+                    <th scope="col">Number</th>
+                    <th scope="col">Order Id</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let no=1 %>
+                    <% orders.forEach((order)=>{%>
+                        <tr>
+                            <th>
+                                <%= no++ %>
+                            </th>
+                            <td>
+                                <a href="/admin/singleOrder/<%= order.orderId %>"><%= order.orderId %></a>
+                                
+                            </td>
+                            <td>
+                                <%= order.createdAt %>
+                            </td>
+                            <td>
+                                <%= order.paymentMethod %>
+                            </td>
+                            <td>
+                                <%= order.status %>
+                            </td>
+                           
+                        </tr>
+                        <%})%>
+            </tbody>
+        </table>
+    </div>
+</div>

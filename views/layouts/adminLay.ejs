@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shoppy an Admin Panel Category Flat Bootstrap Responsive Website Template | Inbox :: w3layouts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Shoppy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script
+        type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Custom Theme files -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!--js-->
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <!--icons-css-->
+    <link href="/css/font-awesome.css" rel="stylesheet">
+    <!--Google Fonts-->
+    <link href='//fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Work+Sans:400,500,600' rel='stylesheet' type='text/css'>
+    <!--//skycons-icons-->
+
+    <!--data-table-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="page-container">
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                
+    <%- include('../partials/adminNav.ejs') %>
+    <div class="inner-block">
+        <%- body %>
+    </div>
+    </div>
+    </div>
+    <%- include('../partials/adminSide.ejs') %>
+    
+    
+    
+    
+        
+        </div>
+        <!-- script-for sticky-nav -->
+        <script>
+            $(document).ready(function () {
+                var navoffeset = $(".header-main").offset().top;
+                $(window).scroll(function () {
+                    var scrollpos = $(window).scrollTop();
+                    if (scrollpos >= navoffeset) {
+                        $(".header-main").addClass("fixed");
+                    } else {
+                        $(".header-main").removeClass("fixed");
+                    }
+                });
+
+            });
+        </script>
+
+    <script>
+        var toggle = true;
+
+        $(".sidebar-icon").click(function () {
+            if (toggle) {
+                $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                $("#menu span").css({ "position": "absolute" });
+            }
+            else {
+                $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                setTimeout(function () {
+                    $("#menu span").css({ "position": "relative" });
+                }, 400);
+            }
+            toggle = !toggle;
+        });
+    </script>
+    <!--scrolling js-->
+    <script src="/js/jquery.nicescroll.js"></script>
+    <script src="/js/scripts.js"></script>
+    <!--//scrolling js-->
+    <script src="/js/bootstrap.js"> </script>
+    <!-- mother grid end here-->
+
+    <script>
+        $(".delete").on("click", function (e) {
+            e.preventDefault()
+            var self = $(this);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = self.attr("href")
+                }
+            })
+        })
+    </script>
+    
+    
+    <style>
+        .container {
+            background-color: rgb(246, 246, 246);
+        }
+    
+        .table {
+            color: rgb(0, 0, 0);
+        }
+    </style>
+    
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+</body>
+</html>

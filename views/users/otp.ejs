@@ -1,0 +1,30 @@
+<div
+  class="container height-100 d-flex justify-content-center align-items-center"
+>
+  <div class="position-relative">
+    <div class="card p-2 text-center">
+      <h6>
+        Please enter the one time password <br />
+        to verify your account
+      </h6>
+      <div><span>A code has been sent to</span> <small><%= newUser.phoneNo %></small></div>
+      <form action="/otpVerification" method="post">
+        <div class="u-s-m-b-30">
+          <input
+            name="otp"
+            class="input-text input-text--primary-style"
+            type="text"
+            id="reg-password"
+            placeholder="Enter OTP"
+          />
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-danger px-4 validate">
+            Validate
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

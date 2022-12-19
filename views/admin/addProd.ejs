@@ -1,0 +1,43 @@
+<div class="blank">
+    
+    
+        <div class="container">
+        
+            <h2 class="text-center">Add Product</h2>
+            <form style="padding: 60px;" action="/admin/addProduct" method="post" enctype="multipart/form-data">
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                
+                    <div class="col">
+                        <div class="form-outline mb-4">
+                            <input type="text" name="name" id="form6Example1" class="form-control" />
+                            <label class="form-label" for="form6Example1">Product name</label>
+                        </div>
+                    </div>
+                <!-- Text input -->
+                <div class="form-outline mb-4">
+                    <input type="text" name="category" id="form6Example3" class="form-control" />
+                    <label class="form-label" for="form6Example3">Category</label>
+                </div>
+        
+                <!-- Number input -->
+                <div class="form-outline mb-4">
+                    <input type="number" name="price" id="form6Example6" class="form-control" />
+                    <label class="form-label" for="form6Example6">Price</label>
+                </div>
+        
+                <!-- Message input -->
+                <div class="form-outline mb-4">
+                    <textarea class="form-control" name="description" id="form6Example7" rows="4"></textarea>
+                    <label class="form-label" for="form6Example7">Description</label>
+                </div>
+                <div class="form-group">
+                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
+                    <label for="exampleFormControlFile1">File input</label>
+                </div>
+        
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4">Sumbit</button>
+            </form>
+        </div>
+
+    </div>
