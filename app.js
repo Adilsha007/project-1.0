@@ -3,8 +3,8 @@ const expressLayouts = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const dotenv = require('dotenv');
-const userRouter = require('./Routes/userRoutes');
-const adminRouter = require('./Routes/adminRoutes');
+const userRouter = require('./routes/userRoutes');
+const adminRouter = require('./routes/adminRoutes');
 const db = require('./helpers/connection');
 const app = express();
 
