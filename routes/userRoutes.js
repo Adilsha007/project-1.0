@@ -351,4 +351,5 @@ router
 router
   .route('/applyCoupon/:total')
   .post(authController.protec, userController.applyCoupon);
+
 module.exports = router;

@@ -267,12 +267,14 @@
 
                     <button class="btn btn--icon toggle-button fas fa-shopping-bag toggle-button-shop"
                         type="button"></button>
+                        <% if(locals.user){%>
                         <% let n=0 %>
                     <% quantities.forEach((quantity)=>{%>
                         <% n = n + quantity %>
                         <%})%>
+                       
                     <span class="total-item-round"><%= n %></span>
-                        
+                        <%}%>
                     <!--====== Menu ======-->
                     <div class="ah-lg-mode">
 
