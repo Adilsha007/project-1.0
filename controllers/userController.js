@@ -75,6 +75,20 @@ exports.getCart = async (req, res, next) => {
   next();
 };
 
+exports.getWishlist = async (req, res, next) => {
+  let user = req.user;
+
+  const products = await Promise.all(
+    user.wishlist.map(async (el) => {
+      const product = await Product.findById(el);
+      return product;
+    })
+  );
+
+  req.products = products;
+  next();
+};
+
 exports.delCartProd = async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,
@@ -87,10 +101,35 @@ exports.delCartProd = async (req, res, next) => {
   res.redirect('/cart');
 };
 
+exports.removeWishlistProd = async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { $pull: { wishlist: req.params.prodId } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  res.redirect('/wishlist');
+};
+
 exports.clearCart = async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.params.id,
     { $set: { cart: [] } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  next();
+};
+
+exports.clearWishlist = async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { $set: { wishlist: [] } },
     {
       new: true,
       runValidators: true,
@@ -478,4 +517,24 @@ exports.applyCoupon = async (req, res, next) => {
   );
   const obj = { grandTotal: totalAmt };
   res.json(obj);
+};
+
+exports.womensWear = async (req, res, next) => {
+  const products = await Product.find({ category: "women's wear" });
+  req.products = products;
+  next();
+};
+
+exports.mensWear = async (req, res, next) => {
+  const products = await Product.find({ category: "men's wear" });
+  req.products = products;
+  next();
+};
+
+exports.accessories = async (req, res, next) => {
+  const products = await Product.find({
+    category: ['men accessories', 'women accessories'],
+  });
+  req.products = products;
+  next();
 };

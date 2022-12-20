@@ -215,6 +215,18 @@ router
   });
 
 router
+  .route('/wishlist')
+  .get(authController.protec, userController.getWishlist, (req, res, next) => {
+    const user = req.user;
+    const products = req.products;
+
+    res.render('../views/users/wishlist.ejs', {
+      layout: '../views/layouts/layout.ejs',
+      user,
+      products,
+    });
+  });
+router
   .route('/addToCart/:id')
   .get(
     authController.protec,
@@ -235,10 +247,24 @@ router
   .get(authController.protec, userController.delCartProd);
 
 router
+  .route('/removeWishlist/:prodId')
+  .get(authController.protec, userController.removeWishlistProd);
+
+router
   .route('/clearCart/:id')
   .get(authController.protec, userController.clearCart, (req, res, next) => {
     res.redirect('/cart');
   });
+
+router
+  .route('/clearWishlist')
+  .get(
+    authController.protec,
+    userController.clearWishlist,
+    (req, res, next) => {
+      res.redirect('/homepage');
+    }
+  );
 
 router
   .route('/payment/:id/:addressId')
@@ -351,5 +377,48 @@ router
 router
   .route('/applyCoupon/:total')
   .post(authController.protec, userController.applyCoupon);
+
+router.route('/errorPage').get(authController.protec, (req, res) => {
+  res.render('../views/users/404.ejs');
+});
+
+router
+  .route('/womensWear')
+  .get(authController.protec, userController.womensWear, (req, res) => {
+    const products = req.products;
+    const user = req.user;
+
+    res.render('../views/users/category.ejs', {
+      layout: '../views/layouts/layout.ejs',
+      user,
+      products,
+    });
+  });
+
+router
+  .route('/mensWear')
+  .get(authController.protec, userController.mensWear, (req, res) => {
+    const products = req.products;
+    const user = req.user;
+
+    res.render('../views/users/category.ejs', {
+      layout: '../views/layouts/layout.ejs',
+      user,
+      products,
+    });
+  });
+
+router
+  .route('/accessories')
+  .get(authController.protec, userController.accessories, (req, res) => {
+    const products = req.products;
+    const user = req.user;
+
+    res.render('../views/users/category.ejs', {
+      layout: '../views/layouts/layout.ejs',
+      user,
+      products,
+    });
+  });
 
 module.exports = router;

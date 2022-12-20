@@ -327,31 +327,22 @@ exports.addToCart = async (req, res, next) => {
       }
     );
   }
-
-  res.redirect('/homepage');
 };
 
 exports.addTowishList = async (req, res, next) => {
-  console.log('wishlist route is runnigng    ' + req.params.id);
-
   const id = req.params.id;
   const users = await User.findOne({ _id: req.user._id });
-
-  const found = users.wishlist.find((el) => el.prodId === id);
-
+  const found = users.wishlist.find((el) => el === id);
   if (!found) {
-    const product = await Product.findById(id);
     const updatedUser = await User.findByIdAndUpdate(
       users._id,
-      { $push: { wishlist: product._id } },
+      { $push: { wishlist: id } },
       {
         new: true,
         runValidators: true,
       }
     );
   }
-
-  // res.redirect('/homepage');
 };
 
 exports.getTourStats = catchAsync(async (req, res) => {

@@ -84,65 +84,7 @@
                                 </ul>
                                 <!--====== End - Dropdown ======-->
                             </li>
-                            <!-- <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Settings">
-
-                                <a><i class="fas fa-user-cog"></i></a> -->
-
-                                <!--====== Dropdown ======-->
-
-                                <!-- <span class="js-menu-toggle"></span>
-                                <ul style="width:120px">
-                                    <li class="has-dropdown has-dropdown--ul-right-100">
-
-                                        <a>Language<i class="fas fa-angle-down u-s-m-l-6"></i></a> -->
-
-                                        <!--====== Dropdown ======-->
-
-                                        <!-- <span class="js-menu-toggle"></span>
-                                        <ul style="width:120px">
-                                            <li>
-
-                                                <a class="u-c-brand">ENGLISH</a>
-                                            </li>
-                                            <li>
-
-                                                <a>ARABIC</a>
-                                            </li>
-                                            <li>
-
-                                                <a>FRANCAIS</a>
-                                            </li>
-                                            <li>
-
-                                                <a>ESPANOL</a>
-                                            </li>
-                                        </ul> -->
-                                        <!--====== End - Dropdown ======-->
-                                    <!-- </li>
-                                    <li class="has-dropdown has-dropdown--ul-right-100">
-
-                                        <a>Currency<i class="fas fa-angle-down u-s-m-l-6"></i></a> -->
-
-                                        <!--====== Dropdown ======-->
-
-                                        <!-- <span class="js-menu-toggle"></span>
-                                        <ul style="width:225px">
-                                            <li>
-
-                                                <a class="u-c-brand">$ - US DOLLAR</a>
-                                            </li>
-                                            <li>
-
-                                                <a>£ - BRITISH POUND STERLING</a>
-                                            </li>
-                                            <li>
-
-                                                <a>€ - EURO</a>
-                                            </li>
-                                        </ul> -->
-                                        <!--====== End - Dropdown ======-->
-                                    <!-- </li>
-                                </ul> -->
+                            
                                 <!--====== End - Dropdown ======-->
                             <!-- </li> -->
                             <li data-tooltip="tooltip" data-placement="left" title="Contact">
@@ -206,48 +148,16 @@
                         <!--====== List ======-->
                         <ul class="ah-list ah-list--design2 ah-list--link-color-secondary">
                             <li>
-
-                                <a href="shop-side-version-2.html">MEN</a>
+                                
+                                <a href="/mensWear">MEN</a>
+                            </li>
+                            <li>
+                                
+                                <a href="/womensWear">WOMEN</a>
                             </li>
                             <li>
 
-                                <a href="shop-side-version-2.html">WOMEN</a>
-                            </li>
-                            <li>
-
-                                <a href="shop-side-version-2.html">ACCESSORIES</a>
-                            </li>
-                            
-                            <li class="has-dropdown">
-
-                                <a>BLOG<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                <!--====== Dropdown ======-->
-
-                                <span class="js-menu-toggle"></span>
-                                <ul style="width:200px">
-                                    <li>
-
-                                        <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="blog-right-sidebar.html">Blog Right Sidebar</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="blog-sidebar-none.html">Blog Sidebar None</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="blog-masonry.html">Blog Masonry</a>
-                                    </li>
-                                    <li>
-
-                                        <a href="blog-detail.html">Blog Details</a>
-                                    </li>
-                                </ul>
-                                <!--====== End - Dropdown ======-->
+                                <a href="/accessories">ACCESSORIES</a>
                             </li>
                             
                             <li>
@@ -267,14 +177,10 @@
 
                     <button class="btn btn--icon toggle-button fas fa-shopping-bag toggle-button-shop"
                         type="button"></button>
-                        <% if(locals.user){%>
-                        <% let n=0 %>
-                    <% quantities.forEach((quantity)=>{%>
-                        <% n = n + quantity %>
-                        <%})%>
+                        
                        
-                    <span class="total-item-round"><%= n %></span>
-                        <%}%>
+                    <span class="total-item-round">3</span>
+                        
                     <!--====== Menu ======-->
                     <div class="ah-lg-mode">
 
@@ -287,14 +193,15 @@
                                 <a href="/homepage"><i class="fas fa-home"></i></a>
                             </li>
                             <li>
-
-                                <a href="wishlist.html"><i class="far fa-heart"></i></a>
+                                <% if(locals.user){%>
+                                <a href="/wishlist"><i class="far fa-heart"></i></a>
+                                <%}%>
                             </li>
                             <li class="has-dropdown">
                                 <% if(locals.user){%>
                                 <a href="/cart" class="mini-cart-shop-link"><i class="fas fa-shopping-bag"></i>
 
-                                    <span class="total-item-round"><%= quantities %></span></a>
+                                    <span class="total-item-round">3</span></a>
                                     <%}%>
                                 <!--====== Dropdown ======-->
 
