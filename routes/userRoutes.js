@@ -379,7 +379,7 @@ router
   .post(authController.protec, userController.applyCoupon);
 
 router.route('/errorPage').get(authController.protec, (req, res) => {
-  res.render('../views/users/404.ejs');
+  res.render('../views/users/404.ejs', { layout: false });
 });
 
 router
