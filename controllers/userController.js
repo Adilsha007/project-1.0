@@ -6,6 +6,7 @@ const catchAsync = require('../utils/catchAsync');
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
 const Coupon = require('../models/couponModel');
+const Banner = require('../models/bannerModel');
 const uuid = require('uuid');
 const { CLIENT_ID, APP_SECRET } = process.env;
 const fetch = require('node-fetch');
@@ -35,7 +36,6 @@ exports.getUser = (req, res) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   // 1, throw error when try to update password
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError('This route is not for password update', 400));
@@ -163,7 +163,6 @@ exports.addAddress = async (req, res, next) => {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, {
       $set: { Address: [req.body] },
     });
-    console.log(updatedUser);
   }
 
   next();
@@ -247,7 +246,6 @@ exports.makeDefaultAddress = async (req, res, next) => {
 };
 
 exports.payment = async (req, res, next) => {
-  console.log(req.params);
   const user = await User.findById(req.params.id);
 
   const found = user.Address.find(
@@ -261,18 +259,26 @@ exports.payment = async (req, res, next) => {
     user.cart.map(async (el) => {
       quantities.push(el.quantity);
       const product = await Product.findById(el.prodId);
+      const stockChange = product.stock - el.quantity;
+      const sale = product.sales + el.quantity;
+      await Product.findByIdAndUpdate(el.prodId, {
+        stock: stockChange,
+        sales: sale,
+      });
       totalAmt = totalAmt + el.quantity * product.price;
       return product;
     })
   );
 
-  const coupon = await Coupon.findOne({ name: user.currentCoupon });
-  if (totalAmt >= coupon.minValue) {
-    const discount = (totalAmt * coupon.discount) / 100;
-    if (discount < coupon.maxValue) {
-      totalAmt = totalAmt - discount;
-    } else {
-      totalAmt = totalAmt - coupon.maxValue;
+  if (user.currentCoupon) {
+    const coupon = await Coupon.findOne({ name: user.currentCoupon });
+    if (totalAmt >= coupon.minValue) {
+      const discount = (totalAmt * coupon.discount) / 100;
+      if (discount < coupon.maxValue) {
+        totalAmt = totalAmt - discount;
+      } else {
+        totalAmt = totalAmt - coupon.maxValue;
+      }
     }
   }
   const newId = uuid.v1();
@@ -305,6 +311,7 @@ exports.payment = async (req, res, next) => {
       user,
       products,
       quantities,
+      totalAmt,
     });
   }
 
@@ -313,14 +320,13 @@ exports.payment = async (req, res, next) => {
 
 exports.getOrders = async (req, res, next) => {
   const user = await User.findById(req.params.id);
-  console.log(user);
   const orders = await Promise.all(
     user.orderId.map(async (el) => {
       const order = await Order.findOne({ orderId: el });
       return order;
     })
   );
-  console.log(orders);
+
   const quantities = [];
 
   const products = await Promise.all(
@@ -371,9 +377,12 @@ exports.cancelOrder = async (req, res, next) => {
 };
 
 exports.singleProd = async (req, res, next) => {
-  const product = await Product.findById(req.params.prodId);
-
-  req.product = product;
+  try {
+    const product = await Product.findById(req.params.prodId);
+    req.product = product;
+  } catch (error) {
+    return res.redirect('/errorPage');
+  }
 
   next();
 };
@@ -396,8 +405,6 @@ async function generateAccessToken() {
 }
 
 exports.paypal = async (req, res, next) => {
-  console.log('paypal payment start');
-
   // use the orders api to create an order
   async function createOrder() {
     let total = req.params.total;
@@ -465,6 +472,7 @@ exports.confirmOrder = async (req, res, next) => {
     deliveryDetails: found,
     products: user.cart,
     paymentMethod: 'Online',
+    totalAmt: req.params.total,
   });
 
   req.body.order = newOrder;
@@ -497,6 +505,7 @@ exports.approval = async (req, res) => {
 };
 
 exports.applyCoupon = async (req, res, next) => {
+  console.log('applying coupon');
   let totalAmt = req.params.total;
   const coupon = await Coupon.findOne({ name: req.body.couponCode });
   if (totalAmt >= coupon.minValue && coupon.status) {
@@ -520,13 +529,16 @@ exports.applyCoupon = async (req, res, next) => {
 };
 
 exports.womensWear = async (req, res, next) => {
-  const products = await Product.find({ category: "women's wear" });
+  const products = await Product.find({
+    category: "women's wear",
+    active: true,
+  });
   req.products = products;
   next();
 };
 
 exports.mensWear = async (req, res, next) => {
-  const products = await Product.find({ category: "men's wear" });
+  const products = await Product.find({ category: "men's wear", active: true });
   req.products = products;
   next();
 };
@@ -534,7 +546,14 @@ exports.mensWear = async (req, res, next) => {
 exports.accessories = async (req, res, next) => {
   const products = await Product.find({
     category: ['men accessories', 'women accessories'],
+    active: true,
   });
   req.products = products;
+  next();
+};
+
+exports.getBanners = async (req, res, next) => {
+  const banners = await Banner.find();
+  req.banners = banners;
   next();
 };

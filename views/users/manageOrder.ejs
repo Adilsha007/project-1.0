@@ -49,11 +49,11 @@
                                         </li>
                                         <li>
 
-                                            <a href="dash-my-profile.html">My Profile</a>
+                                            <a href="/myprofile">My Profile</a>
                                         </li>
                                         <li>
 
-                                            <a href="dash-address-book.html">Address Book</a>
+                                            <a href="/addressBook">Address Book</a>
                                         </li>
                                         <li>
 
@@ -61,7 +61,7 @@
                                         </li>
                                         <li>
 
-                                            <a href="dash-my-order.html">My Orders</a>
+                                            <a href="/myOrders/<%= user.id %>">My Orders</a>
                                         </li>
                                         <li>
 
@@ -143,10 +143,10 @@
                                             </div>
                                         </div>
                                         <div class="dash-l-r">
-                                            <div class="manage-o__text u-c-secondary">Delivered on 26 Oct 2016</div>
+                                            <div class="manage-o__text u-c-secondary">Delivered within 10 days</div>
                                             <div class="manage-o__icon"><i class="fas fa-truck u-s-m-r-5"></i>
 
-                                                <span class="manage-o__text">Standard</span>
+                                                <span class="manage-o__text"><%= order.status %></span>
                                             </div>
                                         </div>
                                         <div class="manage-o__timeline">
@@ -232,7 +232,7 @@
                                             <span class="dash__text-2"><%= order.deliveryDetails.phoneNo%></span>
                                         </div>
                                     </div>
-                                    <% if(order.status =! 'cancelled'){%>
+                                    <% if(order.status != 'cancelled'){%>
                                     <div class="dash__box dash__box--bg-white dash__box--shadow dash__box--w">
                                         <div class="dash__pad-3">
                                             <div>
@@ -252,12 +252,22 @@
                                                 <div class="manage-o__text-2 u-c-secondary">₹<%= total %></div>
                                             </div>
                                             <div class="dash-l-r u-s-m-b-8">
+                                                <div class="manage-o__text-2 u-c-secondary">Discount</div>
+                                                <div class="manage-o__text-2 u-c-secondary">- ₹<%= total-order.totalAmt+100 %></div>
+                                            </div>
+                                            <div class="dash-l-r u-s-m-b-8">
                                                 <div class="manage-o__text-2 u-c-secondary">Shipping Fee</div>
                                                 <div class="manage-o__text-2 u-c-secondary">₹100</div>
                                             </div>
+                                            <% if((total-order.totalAmt+100) != 0 ){%>
+                                            <div class="dash-l-r u-s-m-b-8">
+                                                <div class="manage-o__text-2 u-c-secondary">applied Coupon</div>
+                                                <div class="manage-o__text-2 u-c-secondary"><%= user.currentCoupon %></div>
+                                            </div>
+                                            <%}%>
                                             <div class="dash-l-r u-s-m-b-8">
                                                 <div class="manage-o__text-2 u-c-secondary">Total</div>
-                                                <div class="manage-o__text-2 u-c-secondary">₹<%= total+100 %></div>
+                                                <div class="manage-o__text-2 u-c-secondary">₹<%= order.totalAmt %></div>
                                             </div>
 
                                             <span class="dash__text-2">Paid by <%= order.paymentMethod %></span>

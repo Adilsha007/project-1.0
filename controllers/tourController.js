@@ -95,7 +95,8 @@ class APIFeatures {
 }
 
 exports.getAllproducts = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Product.find(), req.query)
+  console.log('getting products');
+  const features = new APIFeatures(Product.find({ active: true }), req.query)
     .filter()
     .sort()
     .limitFields()
@@ -232,13 +233,15 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
+  const product = await Product.findByIdAndUpdate(req.params.id, {
+    active: false,
+  });
 
   if (!product) {
     return next(new AppError('No tour found with this id'), 404);
   }
 
-  res.status(200).redirect('/viewProduct');
+  res.status(200).redirect('/admin/viewProduct');
   // json({
   //   Status: 'success',
   //   data: {
@@ -258,7 +261,6 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const newProduct = await Product.create(req.body);
-
   let image = req.files.image;
 
   image.mv(

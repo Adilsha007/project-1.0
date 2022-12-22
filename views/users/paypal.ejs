@@ -49,9 +49,9 @@
                         <p class="fs-14 fw-bold">-<span class="fas fa-dollar-sign px-1"></span>100</p>
                     </div> -->
                     <div class="d-flex justify-content-between mb-3">
-                        <p class="textmuted fw-bold">Total</p>
+                        <p class="textmuted fw-bold">Total(offers applied)</p>
                         <div class="d-flex align-text-top ">
-                            <span class="fas fa-dollar-sign mt-1 pe-1 fs-14 "></span><span id="totalPrice" class="h4"><%= total+100 %></span>
+                            <span class="fas fa-dollar-sign mt-1 pe-1 fs-14 "></span><span id="totalPrice" class="h4"><%= totalAmt %></span>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                                     .then((response) => response.json())
                                     .then((orderData) => {
                                         try {
-                                            return fetch('/confirmOrder', {
+                                            return fetch('/confirmOrder/<%= totalAmt %>', {
                                                 method: 'POST',
                                                 body: JSON.stringify({ orderData }),
                                                 headers: { 'Content-Type': 'application/json' }

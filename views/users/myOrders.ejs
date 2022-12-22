@@ -100,67 +100,43 @@
                                     </form>
                                     <div class="m-order__list">
 
-                                        <% orders.forEach((order)=>{%>
-                                        <div class="m-order__get">
-                                            <div class="manage-o__header u-s-m-b-30">
-                                                <div class="dash-l-r">
-                                                    <div>
-                                                        <div class="manage-o__text-2 u-c-secondary">Order #<%= order.orderId %>
-                                                        </div>
-                                                        <div class="manage-o__text u-c-silver">Placed on <%= order.createdAt %></div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="dash__link dash__link--brand">
-
-                                                            <a href="/manageOrder/<%= order.orderId %>">MANAGE</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <% let no=0 %>
-                                                <% let total=0 %>
-                                                    <% order.products.forEach((prod)=>{%>
-                                                        <% products.forEach((product)=>{%>
-                                                            <% product.forEach((el)=>{%>
-                                                                <% if(el._id==prod.prodId){%>
-                                            <div class="manage-o__description">
-                                                <div class="description__container">
-                                                    <div class="description__img-wrap">
-
-                                                        <img class="u-img-fluid" src="/images/product/ludus/<%= el._id %>.jpeg"
-                                                            alt="">
-                                                    </div>
-                                                    <div class="description-title"><%= el.name %></div>
-                                                </div>
-                                                
-                                                <div class="description__info-wrap">
-                                                    <div>
-
-                                                        <span class="manage-o__badge badge--shipped"><%= order.status %></span>
-                                                    </div>
-                                                    <!-- <div>
-
-                                                        <span class="manage-o__text-2 u-c-silver">Quantity:
-
-                                                            <span class="manage-o__text-2 u-c-secondary">1</span></span>
-                                                    </div> -->
-                                                    <div>
-
-                                                        <span class="manage-o__text-2 u-c-silver">Total:
-
-                                                            <span
-                                                                class="manage-o__text-2 u-c-secondary">₹<%= total+100 %></span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%}%>
-                                                <% total=total+ (quantities[no] * el.price) %>
-                                                    <% no++ %>
+                                        <table class="table mt-5" id="myTable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Number</th>
+                                                    <th scope="col">Order Id</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Payment Method</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% let no=1 %>
+                                                    <% orders.forEach((order)=>{%>
+                                                        <tr>
+                                                            <th>
+                                                                <%= no++ %>
+                                                            </th>
+                                                            <td>
+                                                                <a href="/manageOrder/<%= order.orderId %>">
+                                                                    <%= order.orderId %>
+                                                                </a>
+                                        
+                                                            </td>
+                                                            <td>
+                                                                <%= order.createdAt %>
+                                                            </td>
+                                                            <td>
+                                                                <%= order.paymentMethod %>
+                                                            </td>
+                                                            <td>
+                                                                <%= order.status %>
+                                                            </td>
+                                        
+                                                        </tr>
                                                         <%})%>
-                                                            <%})%>
-                                                                <%})%>
-                                        </div>
-                                        <%})%>
+                                            </tbody>
+                                        </table>
 
                                     </div>
                                 </div>

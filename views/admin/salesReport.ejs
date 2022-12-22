@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css"/>
+<div class="blank">
+
+
+<div class="container mt-5">
+    <div class="mt-5">
+        <h2 style="margin-left: 42%; font-size:34px">Sales Report</h2>
+    </div>
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stocks</th>
+                <th scope="col">sales</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% let no=1 %>
+        <% products.forEach((product)=>{%>
+            <tr>
+                <th><%= no %></th>
+                <td><%= product.name %></td>
+                <td><%= product.category %></td>
+                <td><%= product.price %></td>
+                <td><%= product.stock %></td>
+                <td><%= product.sales %></td>
+            </tr>
+            <% no++ %>
+                <%})%>
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#myTable").DataTable({
+            dom: "Bfrtip",
+            buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5"],
+        });
+    });
+</script>

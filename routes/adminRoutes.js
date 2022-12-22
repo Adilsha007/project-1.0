@@ -6,9 +6,45 @@ const adminController = require('../controllers/adminController');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/', adminController.dashboardDetails, (req, res) => {
+  const users = req.users;
+  const products = req.products;
+  const orders = req.orders;
+  const revenueFromCOD = req.revenueFromCOD;
+  const revenueFromOnline = req.revenueFromOnline;
+  const totalRevenue = req.totalRevenue;
+  const totalcancelledOrders = req.totalcancelledOrders;
+  const recentOrders = req.recentOrders;
+  const mensWear = req.mensWear;
+  const womensWear = req.womensWear;
+  const mensAccess = req.mensAccess;
+  const womensAccess = req.womensAccess;
+  const stocks = req.stocks;
+  // console.log(
+  //   users,
+  //   products,
+  //   orders,
+  //   revenueFromCOD,
+  //   revenueFromOnline,
+  //   totalRevenue,
+  //   totalcancelledOrders,
+  //   chartArray
+  // );
   res.render('../views/admin/adminDash.ejs', {
     layout: '../views/layouts/adminLay.ejs',
+    users,
+    products,
+    orders,
+    revenueFromCOD,
+    revenueFromOnline,
+    totalRevenue,
+    totalcancelledOrders,
+    recentOrders,
+    mensWear,
+    mensAccess,
+    womensWear,
+    womensAccess,
+    stocks,
   });
 });
 
@@ -17,11 +53,14 @@ router
   .get(
     authController.protec,
     authController.restrictTo('admin'),
+    adminController.getCategories,
     (req, res) => {
       let user = req.user;
+      let categories = req.categories;
       res.render('../views/admin/addProd.ejs', {
         layout: '../views/layouts/adminLay.ejs',
         user,
+        categories,
       });
     }
   )
@@ -163,22 +202,89 @@ router
     }
   )
   .post(
-    adminController.createCoupon,
+    authController.protec,
     authController.restrictTo('admin'),
-    (req, res) => {
-      const coupons = req.coupons;
-      res.render('../views/admin/viewCoupons.ejs', {
-        layout: '../views/layouts/adminLay.ejs',
-        coupons,
-      });
-    }
+    adminController.checkCoupon,
+    adminController.createCoupon
   );
+
 router
   .route('/deleteCoupon/:couponId')
   .get(
     authController.protec,
     authController.restrictTo('admin'),
     adminController.deleteCoupon
+  );
+
+router
+  .route('/viewCategory')
+  .get(
+    authController.protec,
+    authController.restrictTo('admin'),
+    adminController.getAllcategory,
+    (req, res) => {
+      const categories = req.categories;
+      res.render('../views/admin/categorylist.ejs', {
+        layout: '../views/layouts/adminLay.ejs',
+        categories,
+      });
+    }
+  );
+
+router
+  .route('/addCategory')
+  .get(
+    authController.protec,
+    authController.restrictTo('admin'),
+    (req, res) => {
+      res.render('../views/admin/addCategory.ejs', {
+        layout: '../views/layouts/adminLay.ejs',
+      });
+    }
+  )
+  .post(
+    authController.protec,
+    authController.restrictTo('admin'),
+    adminController.checkCategory,
+    adminController.addCategory
+  );
+
+router
+  .route('/viewSalesReport')
+  .get(
+    authController.protec,
+    authController.restrictTo('admin'),
+    productController.getAllproducts,
+    (req, res) => {
+      let products = req.body.products;
+      res.render('../views/admin/salesReport.ejs', {
+        layout: '../views/layouts/adminLay.ejs',
+        products,
+      });
+    }
+  );
+
+router
+  .route('/viewBanners')
+  .get(
+    authController.protec,
+    authController.restrictTo('admin'),
+    adminController.getAllBanners,
+    (req, res) => {
+      let banners = req.banners;
+      res.render('../views/admin/viewBanners.ejs', {
+        layout: '../views/layouts/adminLay.ejs',
+        banners,
+      });
+    }
+  );
+router
+  .route('/addBanner')
+  .post(
+    authController.protec,
+    authController.restrictTo('admin'),
+    adminController.checkBanner,
+    adminController.addBanner
   );
 // router.route('/')
 //     .get(userController.getAllusers)

@@ -74,31 +74,41 @@ router.get('/', (req, res) => {
   res.redirect('/guesthome');
 });
 
-router.get('/guesthome', productController.getAllproducts, (req, res) => {
-  const products = req.body.products;
-  res.render('../views/users/homepage.ejs', {
-    layout: '../views/layouts/layout.ejs',
-    products,
-  });
-});
+router.get(
+  '/guesthome',
+  productController.getAllproducts,
+  userController.getBanners,
+  (req, res) => {
+    const products = req.body.products;
+    const banners = req.banners;
+    res.render('../views/users/homepage.ejs', {
+      layout: '../views/layouts/layout.ejs',
+      products,
+      banners,
+    });
+  }
+);
 
 router
   .route('/homepage')
   .get(
     authController.protec,
     productController.getAllproducts,
+    userController.getBanners,
     userController.getCart,
     (req, res) => {
       const user = req.user;
       const products = req.body.products;
       const cartProd = req.products;
       const quantities = req.quantities;
+      const banners = req.banners;
       res.render('../views/users/homepage.ejs', {
         layout: '../views/layouts/layout.ejs',
         user,
         products,
         cartProd,
         quantities,
+        banners,
       });
     }
   );
@@ -228,11 +238,7 @@ router
   });
 router
   .route('/addToCart/:id')
-  .get(
-    authController.protec,
-    productController.getAllproducts,
-    productController.addToCart
-  );
+  .get(authController.protec, productController.addToCart);
 
 router
   .route('/addTowishList/:id')
@@ -335,7 +341,6 @@ router.route('/paypal').get(authController.protec, (req, res) => {
   const user = req.body.user;
   const products = req.products;
   const quantities = req.quantities;
-  console.log(user, products, quantities);
   res.render('../views/users/paypal.ejs', {
     layout: '../views/layouts/layout.ejs',
     user,
@@ -352,7 +357,7 @@ router
   .route('/paypal/:orderID/capture')
   .post(authController.protec, userController.approval);
 router
-  .route('/confirmOrder')
+  .route('/confirmOrder/:total')
   .post(
     authController.protec,
     userController.confirmOrder,

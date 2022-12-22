@@ -51,6 +51,15 @@ const productSchema = mongoose.Schema(
       type: String,
       default: new Date().toLocaleDateString(),
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+    stock: Number,
+    sales: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     toJSON: { virtuals: true },
