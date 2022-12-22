@@ -5996,7 +5996,8 @@ input::-ms-clear {
 20.3 Owl-Carousel
 --------------------------------------------------------------*/
 .slider-fouc {
-  display: none; }
+  /* display: none;  */
+}
 
 .s-skeleton {
   position: relative; }

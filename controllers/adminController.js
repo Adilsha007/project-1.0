@@ -182,7 +182,7 @@ exports.dashboardDetails = async (req, res, next) => {
       $project: { _id: 0, name: 1, stock: 1 },
     },
   ]);
-  console.log(stocks);
+
   const revenueFromCOD = totalCOD[0].total;
   const revenueFromOnline = totalOnline[0].total;
   const totalRevenue = revenueFromCOD + revenueFromOnline;
